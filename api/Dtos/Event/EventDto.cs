@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Comment;
 using api.Enums;
 
-namespace api.Models
+namespace api.Dtos.Event
 {
-    public class Event
+    public class EventDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
@@ -17,6 +18,6 @@ namespace api.Models
         public DateTime EndDateTime { get; set; }
         public bool IsAllDay { get; set; } = false;
         public EventStatus Status { get; set; } = EventStatus.Tentative;
-        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<CommentDto> Comments { get; set; }
     }
 }
