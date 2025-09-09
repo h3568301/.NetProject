@@ -25,6 +25,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 
 
 builder.Services.AddScoped<IEventRepo, EventRepo>();
+builder.Services.AddScoped<ICommentRepo, CommentRepo>();
 
 var app = builder.Build();
 

@@ -37,6 +37,11 @@ namespace api.Repository
             return eventModel;
         }
 
+        public async Task<bool> EventExist(int id)
+        {
+            return await _context.Events.AnyAsync(s=>s.Id ==id);
+        }
+
         public async Task<List<Event>> GetAllAsync()
         {
             return await _context.Events.Include(c => c.Comments).ToListAsync();

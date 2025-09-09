@@ -14,5 +14,6 @@ namespace api.Interfaces
         Task<Event> CreateAsync(Event createEventRequestDto);
         Task<Event?> DeleteAsync(int id);
         Task<Event?> UpdateAsync(int id, UpdateEventRequestDto updateEventRequestDto);
+        Task<bool> EventExist(int id);
     }
 }

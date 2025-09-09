@@ -23,11 +23,6 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var eventModel = await _eventRepo.GetAllAsync();
             var eventDto = eventModel.Select(s => s.ToEventDto());
 

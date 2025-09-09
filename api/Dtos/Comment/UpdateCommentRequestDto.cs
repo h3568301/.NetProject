@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.Models
+namespace api.Dtos.Comment
 {
-    public class Comment
+    public class UpdateCommentRequestDto
     {
-        public int Id { get; set; }
+        [Required]
+        [StringLength(255, ErrorMessage = "Maximum Length of Title is 255.")]
         public string Content { get; set; } = string.Empty;
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
-        public int? EventId { get; set; }
-        public Event? Event { get; set; }
     }
 }
