@@ -21,11 +21,12 @@ namespace api.Mappers
                 EndDateTime = events.EndDateTime,
                 IsAllDay = events.IsAllDay,
                 Status = events.Status,
-                Comments = events.Comments.Select(x => x.ToCommentDto()).ToList()
+                Comments = events.Comments.Select(x => x.ToCommentDto()).ToList(),
+                UserId = events.UserId
             };
         }
         
-        public static Event ToCreateEventRequestDto (this CreateEventRequestDto events)
+        public static Event ToCreateEventRequestDto (this CreateEventRequestDto events, string UserId)
         {
             return new Event
             {
@@ -35,7 +36,8 @@ namespace api.Mappers
                 StartDateTime = events.StartDateTime,
                 EndDateTime = events.EndDateTime,
                 IsAllDay = events.IsAllDay,
-                Status = events.Status
+                Status = events.Status,
+                UserId = UserId
             };
         }
     }

@@ -19,5 +19,6 @@ namespace api.Dtos.Event
         public bool IsAllDay { get; set; } = false;
         public EventStatus Status { get; set; } = EventStatus.Tentative;
         public List<CommentDto> Comments { get; set; }
+        public string? UserId { get; set; }
     }
 }

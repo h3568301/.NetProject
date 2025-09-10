@@ -18,5 +18,7 @@ namespace api.Models
         public bool IsAllDay { get; set; } = false;
         public EventStatus Status { get; set; } = EventStatus.Tentative;
         public List<Comment> Comments { get; set; } = new List<Comment>();
+        public string UserId { get; set; }
+        public AppUser? AppUser { get; set; }
     }
 }

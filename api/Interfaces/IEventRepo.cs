@@ -12,7 +12,7 @@ namespace api.Interfaces
         Task<List<Event>> GetAllAsync();
         Task<Event?> GetByIdAsync(int id);
         Task<Event> CreateAsync(Event createEventRequestDto);
-        Task<Event?> DeleteAsync(int id);
+        Task<Event?> DeleteAsync(int id, string userId);
         Task<Event?> UpdateAsync(int id, UpdateEventRequestDto updateEventRequestDto);
         Task<bool> EventExist(int id);
     }

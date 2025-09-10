@@ -8,5 +8,6 @@ namespace api.Models
 {
     public class AppUser : IdentityUser
     {
+        public List<Event> Events { get; set; } = new List<Event>();
     }
 }

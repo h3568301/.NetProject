@@ -6,6 +6,7 @@ using api.Data;
 using api.Dtos.Event;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
@@ -13,9 +14,11 @@ namespace api.Repository
     public class EventRepo : IEventRepo
     {
         private readonly ApplicationDBContext _context;
-        public EventRepo(ApplicationDBContext context)
+        private readonly UserManager<AppUser> _userManager;
+        public EventRepo(ApplicationDBContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<Event> CreateAsync(Event createEventRequestDto)
@@ -25,9 +28,9 @@ namespace api.Repository
             return createEventRequestDto;
         }
 
-        public async Task<Event?> DeleteAsync(int id)
+        public async Task<Event?> DeleteAsync(int id, string userId)
         {
-            var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Id == id);
+            var eventModel = await _context.Events.FirstOrDefaultAsync(x => (x.Id == id && x.UserId == userId));
             if (eventModel == null)
             {
                 return null;

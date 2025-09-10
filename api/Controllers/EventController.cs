@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using api.Dtos.Event;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 
@@ -16,9 +19,11 @@ namespace api.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventRepo _eventRepo;
-        public EventController(IEventRepo eventRepo)
+        private readonly UserManager<AppUser> _userManager;
+        public EventController(IEventRepo eventRepo, UserManager<AppUser> userManager)
         {
             _eventRepo = eventRepo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -57,7 +62,14 @@ namespace api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var eventModel = createEventRequestDto.ToCreateEventRequestDto();
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null) {
+                return Unauthorized("User ID not found in token");
+            }
+
+            var eventModel = createEventRequestDto.ToCreateEventRequestDto(userId);
+            
             await _eventRepo.CreateAsync(eventModel);
             return CreatedAtAction(nameof(GetById), new { id = eventModel.Id }, eventModel.ToEventDto());
         }
@@ -71,10 +83,16 @@ namespace api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var eventModel = await _eventRepo.DeleteAsync(id);
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null) {
+                return Unauthorized("User ID not found in token");
+            }
+
+            var eventModel = await _eventRepo.DeleteAsync(id, userId);
             if (eventModel == null)
             {
-                return NotFound();
+                return Unauthorized("The record cannot be found/ You have no access to delete that record.");
             }
             return NoContent();
         }
