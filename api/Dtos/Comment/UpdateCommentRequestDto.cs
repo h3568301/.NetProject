@@ -11,6 +11,7 @@ namespace api.Dtos.Comment
         [Required]
         [StringLength(255, ErrorMessage = "Maximum Length of Title is 255.")]
         public string Content { get; set; } = string.Empty;
+        [Required]
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
     }
 }
