@@ -6,6 +6,7 @@ using api.Dtos.Comment;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -23,6 +24,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var commentModel = await _commentRepo.GetAllAsync();
@@ -34,6 +36,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -50,6 +53,7 @@ namespace api.Controllers
         }
 
         [HttpPost("{eventId:int}")]
+        [Authorize]
         public async Task<IActionResult> Create([FromRoute] int eventId, [FromBody] CreateCommentRequestDto createCommentRequestDto)
         {
             if (!ModelState.IsValid)
@@ -67,6 +71,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -83,9 +88,11 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto commentModel)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var commentRepo = await _commentRepo.UpdateAsync(id, commentModel);
