@@ -72,7 +72,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme =
     options.DefaultSignInScheme =
     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options=>
+}).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -86,6 +86,15 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
+
+builder.Services.AddCors(options =>
+  {
+      options.AddPolicy("AllowReactApp",
+          builder =>
+          {
+              builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+          });
+  });
 
 builder.Services.AddScoped<IEventRepo, EventRepo>();
 builder.Services.AddScoped<ICommentRepo, CommentRepo>();
@@ -106,7 +115,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("AllowReactApp");
 app.MapControllers();
 
 app.Run();
