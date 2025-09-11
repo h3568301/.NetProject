@@ -40,9 +40,9 @@ namespace api.Controllers
                     UserName = registerDto.Username,
                     Email = registerDto.Email
                 };
-                var craeteUser = await _userManager.CreateAsync(appUser, registerDto.Password);
+                var createUser = await _userManager.CreateAsync(appUser, registerDto.Password);
 
-                if (craeteUser.Succeeded)
+                if (createUser.Succeeded)
                 {
                     var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
                     if (roleResult.Succeeded)
@@ -62,7 +62,7 @@ namespace api.Controllers
                 }
                 else
                 {
-                    return StatusCode(500, craeteUser.Errors);
+                    return StatusCode(500, createUser.Errors);
                 }
             }
             catch (Exception e)

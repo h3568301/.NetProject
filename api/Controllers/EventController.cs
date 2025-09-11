@@ -106,10 +106,16 @@ namespace api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var eventModel = await _eventRepo.UpdateAsync(id, updateEventRequestDto);
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null) {
+                return Unauthorized("User ID not found in token");
+            }
+
+            var eventModel = await _eventRepo.UpdateAsync(id, updateEventRequestDto, userId);
             if (eventModel == null)
             {
-                return NotFound();
+                return Unauthorized("The record cannot be found/ You have no access to delete that record.");
             }
 
             return Ok(eventModel.ToEventDto());

@@ -61,9 +61,9 @@ namespace api.Repository
             return eventModel;
         }
 
-        public async Task<Event?> UpdateAsync(int id, UpdateEventRequestDto updateEventRequestDto)
+        public async Task<Event?> UpdateAsync(int id, UpdateEventRequestDto updateEventRequestDto, string userId)
         {
-            var existingStock = await _context.Events.FirstOrDefaultAsync(x => x.Id == id);
+            var existingStock = await _context.Events.FirstOrDefaultAsync(x => (x.Id == id && x.UserId == userId));
             if (existingStock == null)
             {
                 return null;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Attributes;
 using api.Enums;
 
 namespace api.Dtos.Event
@@ -20,6 +21,7 @@ namespace api.Dtos.Event
         [Required]
         public DateTime StartDateTime { get; set; }
         [Required]
+        [DateRangeValidation("StartDateTime")]
         public DateTime EndDateTime { get; set; }
         public bool IsAllDay { get; set; } = false;
         public EventStatus Status { get; set; } = EventStatus.Tentative;

@@ -62,7 +62,7 @@ namespace api.Controllers
             }
             if (!await _eventRepo.EventExist(eventId))
             {
-                return BadRequest("Stock Not Exist");
+                return BadRequest("Event Not Exist");
             }
             var commentModel = createCommentRequestDto.ToCommentFromCreateDto();
             await _commentRepo.CreateAsync(commentModel);

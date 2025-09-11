@@ -13,7 +13,7 @@ namespace api.Interfaces
         Task<Event?> GetByIdAsync(int id);
         Task<Event> CreateAsync(Event createEventRequestDto);
         Task<Event?> DeleteAsync(int id, string userId);
-        Task<Event?> UpdateAsync(int id, UpdateEventRequestDto updateEventRequestDto);
+        Task<Event?> UpdateAsync(int id, UpdateEventRequestDto updateEventRequestDto, string userId);
         Task<bool> EventExist(int id);
     }
 }
