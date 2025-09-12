@@ -4,6 +4,7 @@ namespace api.Enums
     {
         Tentative = 0,
         Confirmed = 1,
-        Cancelled = 2
+        Completed = 2,
+        Cancelled = 3
     }
 }

@@ -1,19 +1,17 @@
 import React from "react";
 import { useAuth } from "../Context/useAuth";
+import NavBar from "../Components/NavBar";
+import HomeComponents from "../Components/HomeComponents";
 
 type Props = {}
 
 const HomePage = (props: Props) => {
-    const {isLoggedIn, user, logout} = useAuth();
-
-    return (<div>
-        <div>Home</div>
+    return (
         <div>
-            <a onClick={logout}>
-                Logout
-            </a>
+            <NavBar/>
+            <HomeComponents/>
         </div>
-    </div>)
+    )
 }
 
 export default HomePage;

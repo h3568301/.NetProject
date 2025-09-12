@@ -10,7 +10,6 @@ using api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 namespace api.Controllers
 {
@@ -30,7 +29,12 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> GetAll()
         {
-            var eventModel = await _eventRepo.GetAllAsync();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null) {
+                return Unauthorized("User ID not found in token");
+            }
+
+            var eventModel = await _eventRepo.GetAllAsync(userId);
             var eventDto = eventModel.Select(s => s.ToEventDto());
 
             return Ok(eventDto);

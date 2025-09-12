@@ -91,6 +91,7 @@ export const UserProvider = ({ children }: Props) => {
     setUser(null)
     setToken("")
     navigate("/login")
+    toast.success("Logout Success!");
   }
 
   return (

@@ -9,7 +9,7 @@ namespace api.Interfaces
 {
     public interface IEventRepo
     {
-        Task<List<Event>> GetAllAsync();
+        Task<List<Event>> GetAllAsync(string userId);
         Task<Event?> GetByIdAsync(int id);
         Task<Event> CreateAsync(Event createEventRequestDto);
         Task<Event?> DeleteAsync(int id, string userId);

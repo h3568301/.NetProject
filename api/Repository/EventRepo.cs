@@ -45,9 +45,15 @@ namespace api.Repository
             return await _context.Events.AnyAsync(s=>s.Id ==id);
         }
 
-        public async Task<List<Event>> GetAllAsync()
+        public async Task<List<Event>> GetAllAsync(string userId)
         {
-            return await _context.Events.Include(c => c.Comments).ToListAsync();
+            var events = await _context.Events.Include(x => x.Comments).Where(x => x.UserId == userId).ToListAsync();
+            if (!events.Any())
+            {
+                return new List<Event>();
+            }
+
+            return events;
         }
 
         public async Task<Event?> GetByIdAsync(int id)
