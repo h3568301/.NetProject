@@ -15,8 +15,8 @@ export const router = createBrowserRouter([
             {path: "home", element:<ProtectedRoute><HomePage/></ProtectedRoute>},
             {path: "login", element:<LoginPage/>},
             {path: "register", element: <RegisterPage/>},
-            {path: "event", element: <EventPage/>},
-            {path: "createEvent", element: <CreateEvenetPage/>},
+            {path: "event", element: <ProtectedRoute><EventPage/></ProtectedRoute>},
+            {path: "createEvent", element: <ProtectedRoute><CreateEvenetPage/></ProtectedRoute>},
         ]
     }
 ]);
