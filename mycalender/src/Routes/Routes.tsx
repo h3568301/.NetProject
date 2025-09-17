@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import App from "../App";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
@@ -12,6 +12,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <App/>,
         children: [
+            {index: true, element: <Navigate to="/home" replace />},
             {path: "home", element:<ProtectedRoute><HomePage/></ProtectedRoute>},
             {path: "login", element:<LoginPage/>},
             {path: "register", element: <RegisterPage/>},
