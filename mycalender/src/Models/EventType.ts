@@ -27,6 +27,7 @@ export interface CreateEventDto {
   endDateTime: string;
   isAllDay: boolean;
   status: number;
+  userId: string;
 }
 
 export interface UpdateEventDto {
@@ -37,4 +38,5 @@ export interface UpdateEventDto {
   endDateTime: string;
   isAllDay: boolean;
   status: number;
+  userId: string;
 }

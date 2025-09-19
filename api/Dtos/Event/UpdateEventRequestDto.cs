@@ -25,5 +25,7 @@ namespace api.Dtos.Event
         public DateTime EndDateTime { get; set; }
         public bool IsAllDay { get; set; } = false;
         public EventStatus Status { get; set; } = EventStatus.Tentative;
+        [Required]
+        public string UserId { get; set; }
     }
 }

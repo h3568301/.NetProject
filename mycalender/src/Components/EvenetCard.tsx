@@ -26,7 +26,7 @@ interface Event {
 
 interface EventCardProps {
   event: Event;
-  onDelete: (eventId: number) => void;
+  onDelete: (eventId: number, userId: string) => void;
   onUpdate: (eventId: number, eventData: UpdateEventDto) => void;
 }
 
@@ -44,6 +44,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onDelete, onUpdate 
     endDateTime: event.endDateTime,
     isAllDay: event.isAllDay,
     status: event.status,
+    userId: event.userId
   });
 
 
@@ -81,7 +82,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onDelete, onUpdate 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      await onDelete(event.id);
+      const deleteUserId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).userId : null;
+      await onDelete(event.id, deleteUserId);
       setShowConfirm(false);
     } catch (error) {
       console.error('Error deleting event:', error);
@@ -167,6 +169,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onDelete, onUpdate 
       endDateTime: event.endDateTime,
       isAllDay: event.isAllDay,
       status: event.status,
+      userId: event.userId,
     });
     setValidationErrors({});
     setIsEditing(false);

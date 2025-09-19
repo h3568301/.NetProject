@@ -36,9 +36,10 @@ export const getEventByIdAPI = async (id: number) => {
     }
 }
 
-export const deleteEventAPI = async (id: number) => {
+export const deleteEventAPI = async (id: number, userId: string) => {
     try {
         const config = {
+            userId: userId,
             headers: {
                 Authorization: "Bearer " + getToken()
             }
@@ -60,6 +61,7 @@ export const updateEventAPI = async (id: number, event: UpdateEventDto) => {
             endDateTime: event.endDateTime,
             isAllDay: event.isAllDay,
             status: event.status,
+            userId: event.userId,
             headers: {
                 Authorization: "Bearer " + getToken()
             }
@@ -82,6 +84,7 @@ export const createEventAPI = async (event: UpdateEventDto) => {
             endDateTime: event.endDateTime,
             isAllDay: event.isAllDay,
             status: event.status,
+            userId: event.userId,
             headers: {
                 Authorization: "Bearer " + getToken()
             }

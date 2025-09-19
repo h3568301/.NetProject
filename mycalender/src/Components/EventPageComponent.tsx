@@ -44,8 +44,8 @@ const EventPageComponent = (props: Props) => {
         fetchEvents();
     }, []);
 
-    const handleDeleteEvent = async (eventId: number) => {
-        await deleteEventAPI(eventId);
+    const handleDeleteEvent = async (eventId: number, userId: string) => {
+        await deleteEventAPI(eventId, userId);
         setEventData((prev: Event[]) => prev.filter((event: Event) => event.id !== eventId));
     };
 

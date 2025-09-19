@@ -43,6 +43,7 @@ const CreateEventCard : React.FC<EventCardProps> = () => {
         endDateTime: endDateTime,
         isAllDay: true,
         status: 0,
+        userId: "",
     });
 
     const [isCreating, setIsCreating] = useState<boolean>(false);
@@ -113,6 +114,7 @@ const CreateEventCard : React.FC<EventCardProps> = () => {
         endDateTime: endDateTime,
         isAllDay: true,
         status: 0,
+        userId: ""
         });
         setValidationErrors({});
     };
@@ -123,7 +125,9 @@ const CreateEventCard : React.FC<EventCardProps> = () => {
         }
         try {
             setIsCreating(true)
-            await createEventAPI(editForm)
+            const postUserId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).userId : null;
+            const eventDataWithUserId = {...editForm, userId: postUserId};
+            await createEventAPI(eventDataWithUserId)
         } catch (error) {
             console.log('Error updating event:', error);
         } finally {

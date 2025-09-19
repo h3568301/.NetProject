@@ -67,13 +67,11 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null) {
-                return Unauthorized("User ID not found in token");
+            if (createEventRequestDto.UserId == null) {
+                return Unauthorized("No userId");
             }
 
-            var eventModel = createEventRequestDto.ToCreateEventRequestDto(userId);
-            
+            var eventModel = createEventRequestDto.ToCreateEventRequestDto(createEventRequestDto.UserId);
             await _eventRepo.CreateAsync(eventModel);
             return CreatedAtAction(nameof(GetById), new { id = eventModel.Id }, eventModel.ToEventDto());
         }
@@ -81,14 +79,13 @@ namespace api.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         [Authorize]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id, [FromBody] string userId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null) {
                 return Unauthorized("User ID not found in token");
             }
@@ -111,12 +108,11 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null) {
+            if (updateEventRequestDto.UserId == null) {
                 return Unauthorized("User ID not found in token");
             }
 
-            var eventModel = await _eventRepo.UpdateAsync(id, updateEventRequestDto, userId);
+            var eventModel = await _eventRepo.UpdateAsync(id, updateEventRequestDto, updateEventRequestDto.UserId);
             if (eventModel == null)
             {
                 return Unauthorized("The record cannot be found/ You have no access to delete that record.");
