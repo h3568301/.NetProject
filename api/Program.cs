@@ -3,6 +3,8 @@ using api.Interfaces;
 using api.Models;
 using api.Repository;
 using api.Service;
+using api.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -99,6 +101,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IEventRepo, EventRepo>();
 builder.Services.AddScoped<ICommentRepo, CommentRepo>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEventRequestValidator>();
 
 
 var app = builder.Build();

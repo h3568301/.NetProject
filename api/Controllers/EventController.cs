@@ -10,6 +10,7 @@ using api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using api.Validators;
 
 namespace api.Controllers
 {
@@ -62,9 +63,11 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateEventRequestDto createEventRequestDto)
         {
-            if (!ModelState.IsValid)
+            var validator = new CreateEventRequestValidator();
+            var validationResult = await validator.ValidateAsync(createEventRequestDto);
+            if (!validationResult.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(validationResult.Errors);
             }
 
             if (createEventRequestDto.UserId == null) {
@@ -103,12 +106,15 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateEventRequestDto updateEventRequestDto)
         {
-            if (!ModelState.IsValid)
+            var validator = new UpdateEventRequestValidator();
+            var validationResult = await validator.ValidateAsync(updateEventRequestDto);
+            if (!validationResult.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(validationResult.Errors);
             }
 
-            if (updateEventRequestDto.UserId == null) {
+            if (updateEventRequestDto.UserId == null)
+            {
                 return Unauthorized("User ID not found in token");
             }
 
