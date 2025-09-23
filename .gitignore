@@ -35,6 +35,8 @@ bld/
 [Ll]og/
 [Ll]ogs/
 docker-compose.yml
+appsettings.Development.json
+appsettings.json
 
 # Build results on 'Bin' directories
 **/[Bb]in/*
