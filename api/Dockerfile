@@ -1,10 +1,8 @@
-# Use the official .NET 9.0 runtime as a parent image for the final stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Use the official .NET 9.0 SDK for building
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
